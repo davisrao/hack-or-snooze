@@ -73,9 +73,19 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( /* user, newStory */) {
+  async addStory(currentInstanceOfUser, {title,author,url}) {
     // UNIMPLEMENTED: complete this function!
+    // take in story data in second input and post it to the API (same with new user)
+    // new instance of story and return new story
+    // 3 other functions at play: 1 to get the current user, 1 to get story data, and 1 to append story to DOM
+
+
+    return newStory;
   }
+
+
+
+  
 }
 
 

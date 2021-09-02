@@ -79,8 +79,7 @@ class StoryList {
 
     //let newStory = await storyList.addStory(currentUser, {title: "Test", author: "Me", url: "http://meow.com"});
 
-    const response = await axios({
-      method: "post",
+    const response = await axios.post(`${BASE_URL}/stories`,{
       token: GLOBAL_TOKEN,
       story: {
         title: title,
@@ -90,13 +89,10 @@ class StoryList {
       },
     });
 
-    // return new Story(
-    //   response.storyId,
-    //   title,
-    //   author,
-    //   username,
-    //   currentUser.createdAt
-    // );
+    console.log(response.data.story.storyId,response.data.story.title,response.data.story.author,response.data.story.url,response.data.story.username,response.data.story.createdAt);
+
+
+    return new Story(response.data.story);
 
     // UNIMPLEMENTED: complete this function!
 

@@ -20,26 +20,6 @@ async function getAndShowStoriesOnStart() {
  * Returns the markup for the story.
  */
 
-async function generateNewUserInputStory(e) {
-  e.preventDefault();
-  const author = $("#new-story-author").val();
-  const title = $("#new-story-title").val();
-  const url = $("#new-story-url").val();
-
-  const newUserInputs = { author, title, url };
-
-  const storyFromUserInputs = await storyList.addStory(
-    currentUser,
-    newUserInputs
-  );
-
-  putStoriesOnPage();
-
-  return storyFromUserInputs;
-}
-
-$newStoryForm.on("submit", generateNewUserInputStory);
-
 function generateStoryMarkup(story) {
   console.debug("generateStoryMarkup", story);
 
@@ -55,6 +35,30 @@ function generateStoryMarkup(story) {
       </li>
     `);
 }
+
+/**
+ * takes in inputs from submit form on website, generates markup, and displays story
+ */
+
+async function generateNewUserInputStory(e) {
+  e.preventDefault();
+  const author = $("#new-story-author").val();
+  const title = $("#new-story-title").val();
+  const url = $("#new-story-url").val();
+
+  const newUserInputs = { author, title, url };
+
+  const storyFromUserInputs = await storyList.addStory(
+    currentUser,
+    newUserInputs
+  );
+
+  putStoriesOnPage();
+  location.reload();
+  return storyFromUserInputs;
+}
+
+$newStoryForm.on("submit", generateNewUserInputStory);
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 

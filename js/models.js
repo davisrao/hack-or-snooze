@@ -26,7 +26,9 @@ class Story {
 
   getHostName() {
     // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    console.log("this URL in gethostname: ", this.url);
+    //we got the below from stack overflow -- https://stackoverflow.com/questions/8498592/extract-hostname-name-from-string
+    return new URL(this.url).host;
   }
 }
 
@@ -67,8 +69,8 @@ class StoryList {
   }
 
   /** Adds story data to API, makes a Story instance, adds it to story list.
-   * - user - the current instance of User who will post the story
-   * - obj of {title, author, url}
+   * - currentUser - the current instance of User who will post the story
+   * - story - obj of {title, author, url}
    *
    * Returns the new Story instance
    */
@@ -79,26 +81,23 @@ class StoryList {
 
     //let newStory = await storyList.addStory(currentUser, {title: "Test", author: "Me", url: "http://meow.com"});
 
+
+    // another way we can do is to pass in "method: POST "
     const response = await axios.post(`${BASE_URL}/stories`,{
+      // we want to use the current user token rather than passing in Global Token
       token: GLOBAL_TOKEN,
       story: {
         title: title,
         author: author,
         url: url,
-        username: username,
+        //username: username, --- commented out because didnt need. Token is what tells API who we are 
       },
     });
 
-    console.log(response.data.story.storyId,response.data.story.title,response.data.story.author,response.data.story.url,response.data.story.username,response.data.story.createdAt);
+    //console.log(response.data.story);
 
 
     return new Story(response.data.story);
-
-    // UNIMPLEMENTED: complete this function!
-
-    // take in story data in second input and post it to the API (same with new user)
-    // new instance of story and return new story
-    // 3 other functions at play: 1 to get the current user, 1 to get story data, and 1 to append story to DOM
   }
 }
 

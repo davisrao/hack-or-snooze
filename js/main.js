@@ -23,7 +23,7 @@ const $newStoryForm = $("#new-story-form");
  */
 
 function hidePageComponents() {
-  const components = [$allStoriesList, $loginForm, $signupForm];
+  const components = [$allStoriesList, $loginForm, $signupForm, $newStoryForm];
   components.forEach((c) => c.hide());
 }
 

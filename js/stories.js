@@ -29,7 +29,7 @@ function generateStoryMarkup(story) {
   //4. Update css class of hidden between both font awesome stars
   const hostName = story.getHostName();
   return $(`
-      <li id="${story.storyId}">
+      <li data-id="${story.storyId}" id="${story.storyId}">
         <i class="far fa-star"></i>
         <i class="fas fa-star hidden"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
@@ -83,31 +83,19 @@ function putStoriesOnPage() {
 }
 
 function toggleStar(e) {
-  console.log("target success", e.target);
+
   const $currentStar = $(e.target).eq(0);
-  const $solidStar = $(".fas").eq(0);
-  $currentStar.toggleClass("hidden");
-  $solidStar.toggleClass("hidden");
+  const $parentStar = $(e.target).parent();
+  
+  const parentStoryId = $parentStar.data('id');
+  console.log("this is the parent's storyId we want to add or remove", parentStoryId);
+  $currentStar.toggleClass("fas far");
 
-  // $currentStar.toggleClass("hidden");
-  // $solidStar.show();
-  // console.log($currentStar.closest("i"), "closest icon");
-  // console.log("current star", $currentStar.closest(".far"));
-  // console.log("solid star", $currentStar.closest(".fas"));
-
-  // if ($currentStar.hasClass("far")) {
-  //   $currentStar.hide();
-  //   $currentStar.closest(".fas").show();
-  //   // $currentStar.show();
-  // }
-
-  // console.log($starFind, "found star");
-  // if (e.target.classList.value === "far fa-star") {
-  //   // e.target.closest(".fas").show();
-  //   e.target.hide();
-  // }
-
-  // console.log(e.target.closest(".hidden"));
+  if($currentStar.hasClass("fas")){
+    currentUser.addFavorite(parentStoryId);
+  }else{
+    currentUser.removeFavorite(parentStoryId);
+  }
 }
 
 $allStoriesList.on("click", ".fa-star", toggleStar);

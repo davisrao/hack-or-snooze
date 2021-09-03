@@ -218,10 +218,10 @@ class User {
 
     console.log("user token on add", loginToken)
     console.log("this is current user", currentUser);
-    console.log("this is storyID on add", story.storyId);
+    console.log("this is storyID on add", story);
 
     const response = await axios.post(
-      `${BASE_URL}/users/${username}/favorites/${story.storyId}`,
+      `${BASE_URL}/users/${username}/favorites/${story}`,
       {
         token: loginToken,
       }
@@ -242,12 +242,12 @@ class User {
     
     console.log("this is the login token on remove", loginToken);
     console.log("this is current user", currentUser);
-    console.log("this is storyID on remove", story.storyId);
+    console.log("this is storyID on remove", story);
 
 
 
     const response = await axios.delete(
-      `${BASE_URL}/users/${username}/favorites/${story.storyId}`,
+      `${BASE_URL}/users/${username}/favorites/${story}`,
       {
         data:{token: loginToken},
       }

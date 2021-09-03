@@ -38,8 +38,24 @@ function updateNavOnLogin() {
 /**
  * when user clicks to submit new story
  */
- function navSubmitNewStoryClick(evt) {
+function navSubmitNewStoryClick() {
   hidePageComponents();
   $newStoryForm.show();
 }
-$navSubmit.on("click",navSubmitNewStoryClick);
+$navSubmit.on("click", navSubmitNewStoryClick);
+
+function navFavoritesStoryList(e) {
+  //$allStoriesList.empty();
+
+  for (let favorite of $allStoriesList.children()) {
+    let favoriteLi = $(favorite).hasClass("favorite");
+    const keepFavorite = $(favorite);
+
+    if (favoriteLi) {
+      keepFavorite.show();
+    } else {
+      keepFavorite.remove();
+    }
+  }
+}
+$navFavorites.on("click", navFavoritesStoryList);

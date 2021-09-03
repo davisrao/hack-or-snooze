@@ -83,19 +83,28 @@ function putStoriesOnPage() {
 }
 
 function toggleStar(e) {
-
   const $currentStar = $(e.target).eq(0);
   const $parentStar = $(e.target).parent();
-  
-  const parentStoryId = $parentStar.data('id');
-  console.log("this is the parent's storyId we want to add or remove", parentStoryId);
+
+  const parentStoryId = $parentStar.data("id");
+  console.log(
+    "this is the parent's storyId we want to add or remove",
+    parentStoryId
+  );
   $currentStar.toggleClass("fas far");
 
-  if($currentStar.hasClass("fas")){
+  if ($currentStar.hasClass("fas")) {
     currentUser.addFavorite(parentStoryId);
-  }else{
+    $parentStar.addClass("favorite");
+    console.log("window object", window.localStorage);
+  } else {
     currentUser.removeFavorite(parentStoryId);
   }
 }
 
 $allStoriesList.on("click", ".fa-star", toggleStar);
+
+//Takes in a
+// function storeFavoriteStories() {
+//   localStorage.setItem("favorite", JSON.stringfy(parentStoryId));
+// }

@@ -90,7 +90,11 @@ class StoryList {
 
     //console.log(response.data.story);
 
-    return new Story(response.data.story);
+    let newStory = new Story(response.data.story);
+    this.stories.push(newStory);
+    currentUser.ownStories.push(newStory);
+
+    return newStory;
   }
 }
 
@@ -212,6 +216,10 @@ class User {
 
     const { username, loginToken } = currentUser;
 
+    console.log("user token on add", loginToken)
+    console.log("this is current user", currentUser);
+    console.log("this is storyID on add", story.storyId);
+
     const response = await axios.post(
       `${BASE_URL}/users/${username}/favorites/${story.storyId}`,
       {
@@ -224,11 +232,30 @@ class User {
   }
 
   /** Create removeFavorites takes in avlue and removes that value */
-  removeFavorite(story) {
+  async removeFavorite(story) {
     this.favorites = this.favorites.filter(
       (keepStories) => keepStories !== story
     );
     console.log("remove Favorites", this.favorites);
+
+    const { username, loginToken } = currentUser;
+    
+    console.log("this is the login token on remove", loginToken);
+    console.log("this is current user", currentUser);
+    console.log("this is storyID on remove", story.storyId);
+
+
+
+    const response = await axios.delete(
+      `${BASE_URL}/users/${username}/favorites/${story.storyId}`,
+      {
+        data:{token: loginToken},
+      }
+    );
+
+    console.log("this is the delete repsonse", response.data);
+    return response.data;
+
   }
 }
 

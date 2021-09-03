@@ -45,17 +45,32 @@ function navSubmitNewStoryClick() {
 $navSubmit.on("click", navSubmitNewStoryClick);
 
 function navFavoritesStoryList(e) {
-  //$allStoriesList.empty();
+  $allStoriesList.empty();
 
-  for (let favorite of $allStoriesList.children()) {
-    let favoriteLi = $(favorite).hasClass("favorite");
-    const keepFavorite = $(favorite);
 
-    if (favoriteLi) {
-      keepFavorite.show();
-    } else {
-      keepFavorite.remove();
+  for (let favorite of currentUser.favorites) {
+    
+    if (! (favorite instanceof Story)) {
+      let favoriteHtml = $(`#${favorite}`).html();
+      console.log(favoriteHtml);
+      $favoritesList.append(favoriteHtml);
     }
   }
+  hidePageComponents();
+  $favoritesList.show();
+
+  // }
+
+  // $favoritesList.show();
+  // for (let favorite of $allStoriesList.children()) {
+  //   let favoriteLi = $(favorite).hasClass("favorite");
+  //   const keepFavorite = $(favorite);
+
+  //   if (favoriteLi) {
+  //     keepFavorite.show();
+  //   } else {
+  //     keepFavorite.remove();
+  //   }
 }
+
 $navFavorites.on("click", navFavoritesStoryList);

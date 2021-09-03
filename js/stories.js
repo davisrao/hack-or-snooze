@@ -86,19 +86,18 @@ function toggleStar(e) {
   const $currentStar = $(e.target).eq(0);
   const $parentStar = $(e.target).parent();
 
-  const parentStoryId = $parentStar.data("id");
+  const parentStory = $parentStar;
   console.log(
     "this is the parent's storyId we want to add or remove",
-    parentStoryId
+    parentStory
   );
   $currentStar.toggleClass("fas far");
 
   if ($currentStar.hasClass("fas")) {
-    currentUser.addFavorite(parentStoryId);
+    currentUser.addFavorite(parentStory);
     $parentStar.addClass("favorite");
-    console.log("window object", window.localStorage);
   } else {
-    currentUser.removeFavorite(parentStoryId);
+    currentUser.removeFavorite(parentStory);
   }
 }
 

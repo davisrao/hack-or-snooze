@@ -234,7 +234,7 @@ class User {
   /** Create removeFavorites takes in avlue and removes that value */
   async removeFavorite(story) {
     this.favorites = this.favorites.filter(
-      (keepStories) => keepStories !== story
+      (keepStories) => keepStories !== story.id
     );
     console.log("remove Favorites", this.favorites);
 
@@ -242,12 +242,12 @@ class User {
     
     console.log("this is the login token on remove", loginToken);
     console.log("this is current user", currentUser);
-    console.log("this is storyID on remove", story);
+    console.log("this is storyID on remove", story.id);
 
 
 
     const response = await axios.delete(
-      `${BASE_URL}/users/${username}/favorites/${story}`,
+      `${BASE_URL}/users/${username}/favorites/${story.id}`,
       {
         data:{token: loginToken},
       }

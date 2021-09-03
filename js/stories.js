@@ -82,16 +82,30 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
+/**Toggle Star function:
+ * This will take in an event parameter,
+ * Utilize the eq method out of jquery object
+ * Toggle bettwen the labeling of fas and far on font-awesome
+ *
+ * Problems: This function doesn't explain enough, needs to do more.
+ * ....OR should have a seperate function for adding the current story to favorites
+ *
+ * //When adding currentUser this needs to be an INSTANCE of a story
+ */
+
 function toggleStar(e) {
   const $currentStar = $(e.target).eq(0);
   const $parentStar = $(e.target).parent();
 
+  $currentStar.toggleClass("fas far");
+
   const parentStory = $parentStar;
+  const parentStoryId = $parentStar.data("id");
+
   console.log(
     "this is the parent's storyId we want to add or remove",
     parentStory
   );
-  $currentStar.toggleClass("fas far");
 
   if ($currentStar.hasClass("fas")) {
     currentUser.addFavorite(parentStory);
@@ -99,7 +113,31 @@ function toggleStar(e) {
   } else {
     currentUser.removeFavorite(parentStory);
   }
+
+  // for (let story of $allStoriesList.children()) {
+  //   let $storyId = $(story).data("id");
+  //   console.log($storyId);
+
+  //   if ($storyId === parentStoryId) {
+  //     $allFavoriteStoryList.append(story);
+  //   }
+  // }
+
+  //1. loop through addStoryList
+  //compare userId with addStory li data-id
+  //if equal add to currentUser.favorite
+  //if also equal generate new list markUP
+
+  // if ($currentStar.hasClass("fas")) {
+  //   currentUser.addFavorite(parentStoryId);
+  //   $parentStar.addClass("favorite");
+  //   console.log("window object", window.localStorage);
+  // } else {
+  //   currentUser.removeFavorite(parentStoryId);
+  // }
 }
+
+//currentUser.addFavorite(parentStoryId);
 
 $allStoriesList.on("click", ".fa-star", toggleStar);
 

@@ -1,8 +1,6 @@
 "use strict";
 
 const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
-const GLOBAL_TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdmlzcmFvIiwiaWF0IjoxNjMwNjAzNTY2fQ.BUxxU0Vok02lvaCNdguOJzEO3TWYfr9YVojHOIFpLts";
 
 /******************************************************************************
  * Story: a single story in the system
@@ -76,26 +74,21 @@ class StoryList {
    */
 
   async addStory(currentUser, story) {
-    const { username } = currentUser;
+    const { loginToken } = currentUser;
     const { title, author, url } = story;
 
-    //let newStory = await storyList.addStory(currentUser, {title: "Test", author: "Me", url: "http://meow.com"});
-
-
     // another way we can do is to pass in "method: POST "
-    const response = await axios.post(`${BASE_URL}/stories`,{
+    const response = await axios.post(`${BASE_URL}/stories`, {
       // we want to use the current user token rather than passing in Global Token
-      token: GLOBAL_TOKEN,
+      token: loginToken,
       story: {
         title: title,
         author: author,
         url: url,
-        //username: username, --- commented out because didnt need. Token is what tells API who we are 
       },
     });
 
     //console.log(response.data.story);
-
 
     return new Story(response.data.story);
   }
@@ -211,4 +204,34 @@ class User {
       return null;
     }
   }
+
+  /** Create add Favorite takes in a value and adds to this.favorites*/
+  async addFavorite(story) {
+    this.favorites.push(story);
+    console.log("favorites", this.favorites);
+
+    const { username, loginToken } = currentUser;
+
+    const response = await axios.post(
+      `${BASE_URL}/users/${username}/favorites/${story.storyId}`,
+      {
+        token: loginToken,
+      }
+    );
+
+    console.log("response received", response.data);
+    return response.data;
+  }
+
+  /** Create removeFavorites takes in avlue and removes that value */
+  removeFavorite(story) {
+    this.favorites = this.favorites.filter(
+      (keepStories) => keepStories !== story
+    );
+    console.log("remove Favorites", this.favorites);
+  }
 }
+
+//ADD: https://hack-or-snooze-v3.herokuapp.com/users/username/favorites/storyId
+
+//DELETE: https://hack-or-snooze-v3.herokuapp.com/users/username/favorites/storyId
